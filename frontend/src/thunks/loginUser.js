@@ -1,24 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setUser } from '../store/sessionSlice';
+import { csrfFetch } from '../store/csrf';
 
 const loginUser = createAsyncThunk(
   'session/loginUser',
-  async (user, { dispatch }) => {
+  async (userDetails, { rejectWithValue }) => {
+    const { credential, password } = userDetails;
     try {
-      const { credential, password } = user;
       const response = await csrfFetch('/api/session', {
         method: 'POST',
-        body: JSON.stringify({
-          credential,
-          password,
-        }),
+        body: JSON.stringify({ credential, password }),
       });
+
       const data = await response.json();
-      dispatch(setUser(data.user));
-      return response;
-    } catch (error) {
-      console.error(error);
-      throw error;
+      return data.user;
+    } catch (response) { // Catch the thrown response. (see csrfFetch).
+      const errorData = await response.json();
+      return rejectWithValue(errorData);
     }
   }
 );
