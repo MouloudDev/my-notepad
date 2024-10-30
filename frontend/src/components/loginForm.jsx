@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import loginUser from "../thunks/loginUser";
 import Spinner from "./spinner";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -18,10 +19,11 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await dispatch(loginUser({credential, password}));
+      await dispatch(loginUser({credential, password}))
+      .unwrap();
       navigate('/', { replace: true });
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Login failed:', error.title);
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +63,7 @@ export default function Login() {
           type="submit"
           className="bg-gray-900 text-white text-xl font-semibold mt-3 py-2 rounded-xl w-full hover:bg-gray-800 transition-colors duration-300"
         >
-          {isLoading ? <Spinner /> : "Login"}
+          {isLoading ? <Spinner /> : "Log In"}
         </button>
         {loginErrors &&
           <ul className="mt-2 pl-4">
@@ -71,6 +73,11 @@ export default function Login() {
           </ul>
         }
       </form>
+      <div className="mt-6">
+        <p className="text-gray-700">Don't have an account?
+          <Link to={'/signup'} className="text-black font-semibold hover:underline"> Sign up here</Link>
+        </p>
+      </div>
     </div>
   )
 }
