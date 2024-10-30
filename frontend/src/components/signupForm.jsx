@@ -8,7 +8,7 @@ import { setSignupErrors } from "../store/sessionSlice";
 
 export default function Login() {
   const dispatch = useDispatch();
-  let signupErrors = useSelector(
+  const signupErrors = useSelector(
     state => state.session.signupErrors
   )
   const navigate = useNavigate();

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import loginUser from '../thunks/loginUser';
 import restoreUser from '../thunks/restoreUser';
 import signupUser from '../thunks/singupUser';
+import logoutUser from '../thunks/logoutUser';
 
 const initialState = {
   user: null,
@@ -31,12 +32,18 @@ const sessionSlice = createSlice({
       state.user = action.payload || null;
     })
 
+    // Signup
     builder.addCase(signupUser.fulfilled, (state, action) => {
       state.user = action.payload
       state.signupErrors = null;
     })
     builder.addCase(signupUser.rejected, (state, action) => {
       state.signupErrors = action.payload.errors
+    })
+
+    // Logout
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.user = null
     })
   }
 })
