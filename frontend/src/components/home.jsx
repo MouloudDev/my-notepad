@@ -1,28 +1,21 @@
-import { useDispatch, useSelector } from "react-redux"
-import logoutUser from "../thunks/logoutUser";
+import NotesNav from "./notes/NotesNav";
+import NoteView from "./notes/NoteView";
+import Settings from "./notes/Settings";
+import CreateNote from "./notes/CreateNote";
+import SearchNotesFrom from "./notes/SearchNotesFrom";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const user = useSelector(state => state.session.user);
-
-  const Logout = async () => {
-    try {
-      await dispatch(logoutUser())
-      .unwrap();
-    } catch (error) {
-      console.error('Logout failed:', error.title);
-    }
-  }
 
   return (
-    <div>
-      <h1>hello I am {user?.username}</h1>
-      <button
-        className="p-2 text-lg font-semibold rounded-xl bg-orange-500 hover:bg-orange-700 transition-all duration-300"
-        onClick={Logout}
-      >
-        Log out
-      </button>
+    <div className="h-screen flex max-w-screen-2xl mx-auto">
+      <div className="flex flex-col w-fit h-full px-2 border-x border-x-gray-500 ">
+        <CreateNote />
+        <h2 className="mt-2 text-lg text-left font-semibold text-gray-200">Your notes</h2>
+        <SearchNotesFrom/>
+        <NotesNav />
+      </div>
+      <NoteView />
+      <Settings />
     </div>
   )
 }

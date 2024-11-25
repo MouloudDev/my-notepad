@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "./spinner";
-import { useNavigate } from "react-router";
+import { Navigate, useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import signupUser from "../thunks/singupUser";
 import { setSignupErrors } from "../store/sessionSlice";
+import restoreUser from "../thunks/restoreUser";
 
-export default function Login() {
+export default function Signup() {
+  const user = useSelector(state => state.session.user);
+  const location = useLocation();
   const dispatch = useDispatch();
   const signupErrors = useSelector(
     state => state.session.signupErrors
@@ -17,6 +20,18 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [restoringUser, setRestroringUser] = useState(true);
+
+  useEffect(() => {
+    const restore = async () => {
+      try {
+        await dispatch(restoreUser());
+      } finally {
+        setRestroringUser(false);
+      }
+    };
+    restore();
+  }, [dispatch])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +52,11 @@ export default function Login() {
       setIsLoading(false);
     }
   };
+
+  if (restoringUser) return <Spinner />;
+
+  if (user)
+    return <Navigate to="/" state={{ from: location }} replace />;
 
   return (
     <div className="border max-w-xl mx-auto mt-60 p-4 sm:p-12 rounded-xl shadow-lg">
@@ -79,7 +99,7 @@ export default function Login() {
         </div>
         <button
           type="submit"
-          className="bg-gray-900 text-white text-xl font-semibold mt-3 py-2 rounded-xl w-full hover:bg-gray-800 transition-colors duration-300"
+          className="bg-gray-900 text-white text-xl font-semibold mt-3 py-2 rounded-xl w-full border border-gray-900 hover:bg-gray-800 hover:border hover:border-gray-300 transition-all duration-300"
         >
           {isLoading ? <Spinner /> : "Sign Up"}
         </button>
@@ -92,8 +112,8 @@ export default function Login() {
         }
       </form>
       <div className="mt-6">
-        <p className="text-gray-700">Already have an account?
-          <Link to={'/login'} className="text-black font-semibold hover:underline"> Login here</Link>
+        <p className="text-gray-300">Already have an account?
+          <Link to={'/login'} className="text-white font-semibold hover:underline"> Login here</Link>
         </p>
       </div>
     </div>

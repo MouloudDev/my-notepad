@@ -14,7 +14,6 @@ export default function ProtectedRoute({ children }) {
     const restore = async () => {
       try {
         await dispatch(restoreUser());
-        await new Promise(res => setTimeout(res, 3000))
       } finally {
         setIsLoading(false);
       }
