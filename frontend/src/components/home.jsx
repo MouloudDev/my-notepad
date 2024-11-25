@@ -3,8 +3,23 @@ import NoteView from "./notes/NoteView";
 import Settings from "./notes/Settings";
 import CreateNote from "./notes/CreateNote";
 import SearchNotesFrom from "./notes/SearchNotesFrom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import fetchNotes from "../thunks/fetchNotes";
 
 export default function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(fetchNotes()).unwrap();
+      } catch(error) {
+        console.log("error fetching Notes", error)
+      }
+    }
+    fetchData();
+  }, [])
 
   return (
     <div className="h-screen flex max-w-screen-2xl mx-auto">

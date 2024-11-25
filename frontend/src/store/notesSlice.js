@@ -1,18 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import formatDateTime from '../utils/formatDateTime';
-
-const notes = Array.from({ length: 10 }, (_, i) => ({
-  id: `note-${i + 1}`,
-  title: `Sample Note ${i + 1}`,
-  content: `This is the content of note ${i + 1}. It serves as sample data for testing.`,
-  createdAt: formatDateTime(new Date(Date.now() - (i + 1) * 100000).toISOString()),
-  updatedAt: formatDateTime(new Date(Date.now() - i * 50000).toISOString())
-}));
+import fetchNotes from '../thunks/fetchNotes';
 
 const initialState = {
-  notesArr: notes,
-  notesToDisplay: notes,
-  currNote: notes[0]
+  notesArr: [],
+  notesToDisplay: [],
+  currNote: null
 }
 
 const notesSlice = createSlice({
@@ -35,6 +27,14 @@ const notesSlice = createSlice({
 
       state.notesToDisplay = [...titleMatches, ...contentMatches];
     }
+  },
+  extraReducers: builder => {
+    builder.addCase(fetchNotes.fulfilled, (state, action) => {
+      const notes = action.payload;
+      state.notesArr = notes;
+      state.notesToDisplay = notes;
+      state.currNote = notes[0] || null;
+    })
   }
 })
 

@@ -7,6 +7,16 @@ export default function NotesNav() {
   const dispatch = useDispatch();
   const {notesToDisplay, currNote} = useSelector(state => state.notes);
 
+  if (!notesToDisplay.length) {
+    return (
+      <div className="w-64 text-center py-4">
+        <p className="text-xl text-gray-200">
+          No notes to display! You can create a new note or try searching with a different term.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 min-w-64">
       <ul>
@@ -68,7 +78,7 @@ function Options({ note }) {
 
   const styles = {
     overlay: "fixed inset-0 z-[999] backdrop-blur-sm flex justify-center items-center",
-    modal: "relative p-1 shadow-lg rounded-lg w-fit border border-gray-500",
+    modal: "relative p-1 shadow-lg rounded-lg w-fit border border-gray-500 bg-[#252627]",
     closeBtnWrapper: "hidden",
   }
 

@@ -7,7 +7,7 @@ export default function CreateNote() {
 
   const styles = {
     overlay: "fixed inset-0 z-[999] backdrop-blur-sm flex justify-center items-center",
-    modal: "relative border border-gray-400 shadow-lg rounded-lg w-full max-w-xl pb-8",
+    modal: "relative border border-gray-400 shadow-lg rounded-lg w-full max-w-xl pb-8 bg-[#252627]",
   }
 
   return (

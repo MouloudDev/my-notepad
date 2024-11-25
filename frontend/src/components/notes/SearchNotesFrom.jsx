@@ -22,6 +22,7 @@ export default function SearchNotesFrom() {
       {term.trim().length > 0 &&
         <button
           onClick={() => {setTerm(''); dispatch(searchNotes(""))}}
+          type="button" // This is important. it prevent this button from action as a submit button.
           className="absolute top-3 right-8 z-50 text-gray-600 hover:text-gray-900"
         >
           <XMark />
