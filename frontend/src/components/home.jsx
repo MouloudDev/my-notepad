@@ -19,7 +19,7 @@ export default function Home() {
       }
     }
     fetchData();
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="h-screen flex max-w-screen-2xl mx-auto">

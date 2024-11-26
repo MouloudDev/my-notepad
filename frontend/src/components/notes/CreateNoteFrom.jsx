@@ -1,38 +1,42 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import createNote from "../../thunks/createNote";
+import Spinner from "../spinner";
+import { clearNoteCreationErrors } from "../../store/notesSlice";
 
-export default function CreateNoteForm() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [errors, setErrors] = useState({ title: "", content: "" });
+export default function CreateNoteForm({closeModal}) {
+  const dispatch = useDispatch();
+  const { noteCreationErrors: errors } =
+    useSelector(state => state.notes);
+  const titleRef = useRef(null);
+  const contenetRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (errors) dispatch(clearNoteCreationErrors())
+  }, [dispatch])
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let hasErrors = false;
+    const title = titleRef.current.value;
+    const content = contenetRef.current.value;
 
-    const newErrors = { title: "", content: "" };
-    if (!title.trim()) {
-      newErrors.title = "Title is required.";
-      hasErrors = true;
-    }
-    if (!content.trim()) {
-      newErrors.content = "Content is required.";
-      hasErrors = true;
-    }
-
-    setErrors(newErrors);
-
-    if (!hasErrors) {
-      console.log("Note Created:", { title, content });
-      setTitle("");
-      setContent("");
-      setErrors({ title: "", content: "" });
+    setIsLoading(true);
+    try {
+      await dispatch(createNote({title, content}))
+      .unwrap();
+      closeModal()
+    } catch (error) {
+      console.error('Creation Failed:', error.title);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-4 rounded-lg shadow-md"
+      className="max-w-md mx-auto px-4 py-2 rounded-lg shadow-md"
     >
       <h2 className="text-2xl font-semibold mb-4">
         Create a Note
@@ -47,14 +51,9 @@ export default function CreateNoteForm() {
         </label>
         <input
           type="text"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          ref={titleRef}
           className="text-gray-800 mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#8B3DFF] focus:border-[#8B3DFF]"
         />
-        {errors.title && (
-          <p className="text-sm text-red-500 mt-1">{errors.title}</p>
-        )}
       </div>
 
       <div className="mb-4">
@@ -65,23 +64,29 @@ export default function CreateNoteForm() {
           Content
         </label>
         <textarea
-          id="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          ref={contenetRef}
           rows="5"
           className="text-gray-800 mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#8B3DFF] focus:border-[#8B3DFF]"
         ></textarea>
-        {errors.content && (
-          <p className="text-sm text-red-500 mt-1">{errors.content}</p>
-        )}
       </div>
 
       <button
         type="submit"
-        className="w-full px-4 py-2 text-white font-semibold bg-[#8B3DFF] hover:bg-[#7731d8] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="w-full h-10 px-4 py-2 text-white font-semibold bg-[#8B3DFF] hover:bg-[#7731d8] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
-        Create Note
+        {isLoading ? <Spinner /> : "Create Note"}
       </button>
+      <div>
+      <div className="mt-2 h-14">
+        {errors &&
+          <ul className="p-1 bg-red-100 rounded-md border border-red-500">
+            {errors.map((err, idx) =>
+              <li key={idx} className="text-sm text-red-800 mt-1">{err}</li>
+            )}
+          </ul>
+        }
+      </div>
+      </div>
     </form>
   );
 }

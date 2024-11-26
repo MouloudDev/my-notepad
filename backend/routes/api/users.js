@@ -41,7 +41,6 @@ const validateSignup = [
     }
     return true;
   }),
-
   handleValidationErrors
 ];
 

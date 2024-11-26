@@ -1,4 +1,4 @@
-export default function (isoString) {
+const formatDateTime = (isoString) => {
   const date = new Date(isoString);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -8,3 +8,5 @@ export default function (isoString) {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+
+export default formatDateTime;

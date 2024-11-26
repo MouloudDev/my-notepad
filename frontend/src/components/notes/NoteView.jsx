@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux"
 import formatDateTime from "../../utils/formatDateTime";
+import Spinner from "../spinner";
 
 export default function NoteView() {
-  const currNote = useSelector(state => state.notes.currNote);
-  const {fontSize, fontFamily} = useSelector(state => state.settings);
+  const {currNote, fetchingNotes} =
+    useSelector(state => state.notes);
+  const {fontSize, fontFamily} =
+    useSelector(state => state.settings);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -14,6 +17,14 @@ export default function NoteView() {
     setTitle(currNote.title);
     setContent(currNote.content)
   }, [currNote])
+
+  if (fetchingNotes) {
+    return (
+      <div className="flex items-center w-full">
+         <Spinner />
+      </div>
+    )
+  }
 
   if (!currNote) return (
     <div className="w-full mx-2">

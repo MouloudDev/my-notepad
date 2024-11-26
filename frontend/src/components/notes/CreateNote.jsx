@@ -5,9 +5,10 @@ import CreateNoteForm from "./CreateNoteFrom"
 export default function CreateNote() {
   const [showModal, setShowModal] = useState(false)
 
+  const closeModal = () => setShowModal(false);
   const styles = {
     overlay: "fixed inset-0 z-[999] backdrop-blur-sm flex justify-center items-center",
-    modal: "relative border border-gray-400 shadow-lg rounded-lg w-full max-w-xl pb-8 bg-[#252627]",
+    modal: "relative border border-gray-400 shadow-lg rounded-lg w-full max-w-xl bg-[#252627] border",
   }
 
   return (
@@ -16,8 +17,8 @@ export default function CreateNote() {
         <PlusIcon />
         <span className="text-lg font-semibold">Create a note</span>
       </button>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} styles={styles}>
-        <CreateNoteForm />
+      <Modal isOpen={showModal} onClose={closeModal} styles={styles}>
+        <CreateNoteForm closeModal={closeModal} />
       </Modal>
     </div>
   )

@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchNotes from '../thunks/fetchNotes';
+import createNote from '../thunks/createNote';
 
 const initialState = {
   notesArr: [],
   notesToDisplay: [],
-  currNote: null
+  currNote: null,
+  noteCreationErrors: null,
+  fetchingNotes: true
 }
 
 const notesSlice = createSlice({
@@ -26,6 +29,9 @@ const notesSlice = createSlice({
       );
 
       state.notesToDisplay = [...titleMatches, ...contentMatches];
+    },
+    clearNoteCreationErrors(state) {
+      state.noteCreationErrors = null;
     }
   },
   extraReducers: builder => {
@@ -33,10 +39,27 @@ const notesSlice = createSlice({
       const notes = action.payload;
       state.notesArr = notes;
       state.notesToDisplay = notes;
-      state.currNote = notes[0] || null;
+      state.fetchingNotes = false
+    })
+    builder.addCase(fetchNotes.rejected, (state) => {
+      state.fetchingNotes = false
+    })
+
+    builder.addCase(createNote.fulfilled, (state, action) => {
+      const createdNote = action.payload;
+      const notesArr = state.notesArr
+      state.notesArr = [createdNote, ...notesArr];
+      state.notesToDisplay = [createdNote, ...notesArr]
+    })
+    builder.addCase(createNote.rejected, (state, action) => {
+      state.noteCreationErrors = action.payload.errors;
     })
   }
 })
 
-export const { setCurrNote, searchNotes } = notesSlice.actions;
+export const {
+  setCurrNote,
+  searchNotes,
+  clearNoteCreationErrors
+} = notesSlice.actions;
 export default notesSlice.reducer;

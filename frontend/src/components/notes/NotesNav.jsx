@@ -2,10 +2,23 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrNote } from "../../store/notesSlice";
 import Modal from "./Modal";
+import Spinner from "../spinner";
 
 export default function NotesNav() {
   const dispatch = useDispatch();
-  const {notesToDisplay, currNote} = useSelector(state => state.notes);
+  const {
+    notesToDisplay,
+    currNote,
+    fetchingNotes
+  } = useSelector(state => state.notes);
+
+  if (fetchingNotes) {
+    return (
+      <div className="w-64 mt-2">
+         <Spinner />
+      </div>
+    )
+  }
 
   if (!notesToDisplay.length) {
     return (
@@ -23,7 +36,7 @@ export default function NotesNav() {
         {notesToDisplay.map(note =>
           <li
             onClick={() => dispatch(setCurrNote(note.id))}
-            className={`${currNote.id === note.id ? "bg-gray-700" : ""} group grid grid-cols-10 items-center content-center my-1 p-3 rounded-lg cursor-pointer min-w-60 h-12 hover:bg-gray-700 transition-colors duration-300`}
+            className={`${currNote?.id === note.id ? "bg-gray-700" : ""} group grid grid-cols-10 items-center content-center my-1 p-3 rounded-lg cursor-pointer min-w-60 h-12 hover:bg-gray-700 transition-colors duration-300`}
             key={note.id}
           >
             <PencilIcon />
