@@ -19,7 +19,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="ml-auto w-full max-w-56">
+    <div className="p-2 ml-auto w-full max-w-60 max-h-fit border-x border-x-gray-500">
       <button
         className="group flex gap-1 items-center justify-between p-2 w-full border border-gray-300 shadow-lg rounded-lg hover:bg-gray-700 transition-colors duration-400"
         onClick={() => setShowOptions(prev => !prev)}

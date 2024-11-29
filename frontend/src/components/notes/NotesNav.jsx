@@ -66,7 +66,7 @@ function Options({ note }) {
     const viewportHeight = window.innerHeight;
 
     // Default position (right of ellipsis)
-    let left = ellipsisRect.right ;
+    let left = ellipsisRect.right -6;
     let top = ellipsisRect.top;
 
     // Check if options would overflow right edge
@@ -133,10 +133,10 @@ function Options({ note }) {
               <h2 className="text-2xl text-center font-semibold">Are you sure you want to delete this note?</h2>
               <p className="text-gray-200 mb-4">{note.title.length > 20 ? note.title.slice(0, 20) + "..." : note.title}</p>
               <div className="flex gap-2 w-full">
-                <button onClick={() => setShowDeleteModal(false)} className="p-2 w-full font-semibold border border-gray-600 rounded-lg hover:bg-gray-800 transition-all duration-300">
+                <button onClick={() => setShowDeleteModal(false)} className="p-2 w-full font-semibold border border-gray-500 rounded-lg hover:bg-gray-800 transition-all duration-300">
                   Cancel
                 </button>
-                <button className="p-2 w-full font-semibold bg-red-600 rounded-lg hover:bg-red-700 transition-all duration-300">
+                <button className="p-2 w-full font-semibold border border-gray-500 bg-red-600 rounded-lg hover:bg-red-700 transition-all duration-300">
                   Delete
                 </button>
               </div>
@@ -149,7 +149,7 @@ function Options({ note }) {
 }
 
 const EllipsisHorizontal = forwardRef((_, ref) => (
-  <svg ref={ref} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7 rounded-lg hover:bg-gray-600">
+  <svg ref={ref} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-9 rounded-lg hover:bg-gray-600">
     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
   </svg>
 ))

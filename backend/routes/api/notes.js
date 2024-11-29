@@ -60,4 +60,37 @@ router.post(
   })
 )
 
+router.patch(
+  '/:noteId',
+  validateNote,
+  asyncHandler(async (req, res, next) => {
+    const id = req.params.noteId;
+    const { title, content } = req.body;
+
+    try {
+      const noteToUpdate = await Note.findByPk(id);
+
+      if (!noteToUpdate) {
+        const err = new Error('Note not found!');
+        err.status = 404;
+        err.title = 'Not Found';
+        err.errors = ['The note you are trying to update does not exist.'];
+        return next(err);
+      }
+
+      noteToUpdate.title = title
+      noteToUpdate.content = content
+      await noteToUpdate.save()
+
+      return res.status(200).json(noteToUpdate);
+    } catch (error) {
+      const err = new Error('Failed to update note!');
+      err.status = 500;
+      err.title = 'Update Failed';
+      err.errors = ['Could not update note. Please try again later.'];
+      return next(err);
+    }
+  })
+)
+
 module.exports = router

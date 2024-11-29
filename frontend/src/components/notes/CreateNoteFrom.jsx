@@ -1,19 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import createNote from "../../thunks/createNote";
 import Spinner from "../spinner";
-import { clearNoteCreationErrors } from "../../store/notesSlice";
 
 export default function CreateNoteForm({closeModal}) {
   const dispatch = useDispatch();
-  const { noteCreationErrors: errors } =
-    useSelector(state => state.notes);
   const titleRef = useRef(null);
   const contenetRef = useRef(null);
+  const [errors, setErrors] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (errors) dispatch(clearNoteCreationErrors())
+    if (errors) setErrors(null)
   }, [dispatch])
 
   const handleSubmit = async (e) => {
@@ -28,6 +26,7 @@ export default function CreateNoteForm({closeModal}) {
       closeModal()
     } catch (error) {
       console.error('Creation Failed:', error.title);
+      setErrors(error.errors)
     } finally {
       setIsLoading(false);
     }
@@ -79,9 +78,9 @@ export default function CreateNoteForm({closeModal}) {
       <div>
       <div className="mt-2 h-14">
         {errors &&
-          <ul className="p-1 bg-red-100 rounded-md border border-red-500">
+          <ul className="flex flex-col gap-1 p-1 bg-red-100 rounded-md border border-red-500">
             {errors.map((err, idx) =>
-              <li key={idx} className="text-sm text-red-800 mt-1">{err}</li>
+              <li key={idx} className="text-sm text-red-800">{err}</li>
             )}
           </ul>
         }

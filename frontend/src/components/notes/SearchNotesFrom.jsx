@@ -11,13 +11,19 @@ export default function SearchNotesFrom() {
     dispatch(searchNotes(term))
   }
 
+  const handleTermChange = (e) => {
+    const termVal = e.currentTarget.value;
+    setTerm(termVal)
+    if (!termVal.length) dispatch(searchNotes(""))
+  }
+
   return (
     <form onSubmit={handleSubmit} className="relative rounded-lg mx-1">
       <input
        className="w-full h-full rounded-lg p-3 outline-slate-200 text-gray-800"
        placeholder="Search notes"
        value={term}
-       onChange={(e) => setTerm(e.target.value)}
+       onChange={handleTermChange}
       />
       {term.trim().length > 0 &&
         <button
