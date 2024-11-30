@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import fetchNotes from '../thunks/fetchNotes';
 import createNote from '../thunks/createNote';
 import updateNote from '../thunks/updateNote';
+import deleteNote from '../thunks/deleteNote';
 
 const initialState = {
   notesArr: [],
@@ -56,6 +57,19 @@ const notesSlice = createSlice({
       )
       state.notesArr = udpatedNotes;
       state.notesToDisplay = udpatedNotes
+    })
+
+    builder.addCase(deleteNote.fulfilled, (state, action) => {
+      const deletedNoteId = action.payload.id;
+      const remainingNotes = state.notesArr.filter(
+        (note) => note.id !== deletedNoteId
+      )
+      state.notesArr = remainingNotes;
+      state.notesToDisplay = remainingNotes
+
+      if (state.currNote.id === deletedNoteId) {
+        state.currNote = null;
+      }
     })
   }
 })

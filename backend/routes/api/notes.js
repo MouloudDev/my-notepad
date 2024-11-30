@@ -93,4 +93,36 @@ router.patch(
   })
 )
 
+router.delete(
+  '/:noteId',
+  asyncHandler(async (req, res, next) => {
+    const id = req.params.noteId;
+
+    try {
+      const noteToDelete = await Note.findByPk(id);
+
+      if (!noteToDelete) {
+        const err = new Error('Note not found!');
+        err.status = 404;
+        err.title = 'Not Found';
+        err.errors = ['The note you are trying to delete does not exist.'];
+        return next(err);
+      }
+
+      await noteToDelete.destroy()
+
+      return res.status(200).json({
+        message: 'Note deleted successfully',
+        id: noteToDelete.id
+      });
+    } catch (error) {
+      const err = new Error('Failed to delete note!');
+      err.status = 500;
+      err.title = 'Deletion Failed';
+      err.errors = ['Could not delete note. Please try again later.'];
+      return next(err);
+    }
+  })
+)
+
 module.exports = router

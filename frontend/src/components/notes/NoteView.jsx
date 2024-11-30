@@ -98,7 +98,7 @@ function Loading() {
 
 function NoNote() {
   return (
-    <div className="w-full mx-2">
+    <div className="w-full mx-2 p-2">
     <p className="text-lg text-center text-gray-200 max-w-xl mx-auto">
       <img src="./Empty-amico.png" alt="empty illustration" />
       No note selected. Click on a note from the list or create a new one if none are available, then click to view it.
