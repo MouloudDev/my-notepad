@@ -24,7 +24,7 @@ export default function NotesNav() {
   if (!notesToDisplay.length) {
     return (
       <div className="w-64 text-center py-4">
-        <p className="text-xl text-gray-200">
+        <p className="text-xl dark:text-gray-200">
           No notes to display! You can create a new note or try searching with a different term.
         </p>
       </div>
@@ -37,7 +37,7 @@ export default function NotesNav() {
         {notesToDisplay.map(note =>
           <li
             onClick={() => dispatch(setCurrNote(note.id))}
-            className={`${currNote?.id === note.id ? "bg-gray-700" : ""} group grid grid-cols-10 items-center content-center my-1 p-3 rounded-lg cursor-pointer min-w-60 h-12 hover:bg-gray-700 transition-colors duration-300`}
+            className={`${currNote?.id === note.id ? "bg-gray-200 dark:bg-gray-700" : ""} group grid grid-cols-10 items-center content-center my-1 p-3 rounded-lg cursor-pointer min-w-60 h-12 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 transition-colors duration-300`}
             key={note.id}
           >
             <PencilIcon />
@@ -92,7 +92,7 @@ function Options({ note }) {
 
   const styles = {
     overlay: "fixed inset-0 z-[999] backdrop-blur-sm flex justify-center items-center",
-    modal: "relative p-1 shadow-lg rounded-lg w-fit border border-gray-500 bg-[#252627]",
+    modal: "relative p-1 shadow-lg rounded-lg w-fit border border-gray-200 bg-white dark:border-gray-500 dark:bg-[#252627]",
     closeBtnWrapper: "hidden",
   }
 
@@ -111,18 +111,19 @@ function Options({ note }) {
             position: 'fixed',
             top: `${position.top}px`,
             left: `${position.left}px`,
+            zIndex: "289"
           }}
-          className="p-2 rounded-lg cursor-pointer bg-gray-600 transition-colors duration-300"
+          className="z-[999] p-2 rounded-lg cursor-pointer bg-white border border-gray-200 shadow-lg dark:bg-gray-600 dark:border-none transition-colors duration-300"
         >
           <button
             onClick={() => dispatch(setCurrNote(note.id))}
-            className="flex gap-1 p-2 w-full rounded-lg hover:bg-gray-500"
+            className="flex gap-1 p-2 w-full rounded-lg hover:bg-gray-200 dark:hover:bg-gray-500"
           >
             <PencilSquareIcon />
             <span>Edit</span>
           </button>
           <button
-            className="flex p-2 w-full text-red-500 rounded-lg hover:bg-gray-500"
+            className="flex p-2 w-full text-red-500 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-500"
             onClick={() => setShowDeleteModal(true)}
           >
             <TrashIcon />
@@ -141,7 +142,7 @@ function Options({ note }) {
 }
 
 const EllipsisHorizontal = forwardRef((_, ref) => (
-  <svg ref={ref} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-9 rounded-lg hover:bg-gray-600">
+  <svg ref={ref} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-9 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
   </svg>
 ))

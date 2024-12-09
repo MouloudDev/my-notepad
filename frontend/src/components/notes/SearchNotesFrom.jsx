@@ -20,7 +20,7 @@ export default function SearchNotesFrom() {
   return (
     <form onSubmit={handleSubmit} className="relative rounded-lg mx-1">
       <input
-       className="w-full h-full rounded-lg p-3 outline-slate-200 text-gray-800"
+       className="w-full h-full rounded-lg p-3 border border-slate-200 outline-slate-300 text-gray-800"
        placeholder="Search notes"
        value={term}
        onChange={handleTermChange}
@@ -28,7 +28,7 @@ export default function SearchNotesFrom() {
       {term.trim().length > 0 &&
         <button
           onClick={() => {setTerm(''); dispatch(searchNotes(""))}}
-          type="button" // This is important. it prevent this button from action as a submit button.
+          type="button" // This is important. it prevent this button from acting as a submit button.
           className="absolute top-3 right-8 z-50 text-gray-600 hover:text-gray-900"
         >
           <XMark />

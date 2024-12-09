@@ -25,7 +25,7 @@ export default function Home() {
     <div className="flex max-w-screen-2xl mx-auto">
       <div className="flex flex-col w-fit h-fit p-2 border-x border-x-gray-500 ">
         <CreateNote />
-        <h2 className="mt-2 text-lg text-left font-semibold text-gray-200">Your notes</h2>
+        <h2 className="mt-2 text-lg text-left font-semibold dark:text-gray-200">Your notes</h2>
         <SearchNotesFrom/>
         <NotesNav />
       </div>

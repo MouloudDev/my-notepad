@@ -35,16 +35,16 @@ export default function CreateNoteForm({closeModal}) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto px-4 py-2 rounded-lg shadow-md"
+      className="max-w-md mx-auto px-4 py-2 rounded-lg"
     >
-      <h2 className="text-2xl font-semibold mb-4">
+      <h2 className="text-2xl font-semibold mb-4 dark:text-white">
         Create a Note
       </h2>
 
       <div className="mb-4">
         <label
           htmlFor="title"
-          className="block text-sm font-medium"
+          className="block text-sm font-medium dark:text-white"
         >
           Title
         </label>
@@ -58,7 +58,7 @@ export default function CreateNoteForm({closeModal}) {
       <div className="mb-4">
         <label
           htmlFor="content"
-          className="block text-sm font-medium"
+          className="block text-sm font-medium dark:text-white"
         >
           Content
         </label>

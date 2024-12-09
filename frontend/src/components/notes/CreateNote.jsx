@@ -8,12 +8,14 @@ export default function CreateNote() {
   const closeModal = () => setShowModal(false);
   const styles = {
     overlay: "fixed inset-0 z-[999] backdrop-blur-sm flex justify-center items-center",
-    modal: "relative border border-gray-400 shadow-lg rounded-lg w-full max-w-xl bg-[#252627] border",
+    modal: "relative border border-gray-400 shadow-lg rounded-lg w-full max-w-xl bg-white dark:bg-[#252627] border",
   }
 
   return (
     <div className="h-12">
-      <button onClick={() => setShowModal(true)} className="flex justify-center items-center gap-2 rounded-md bg-[#8B3DFF] w-full h-full max-h-12 hover:bg-[#7731d8] transition-colors duration-300">
+      <button onClick={() => setShowModal(true)}
+        className="flex justify-center items-center gap-2 text-white rounded-md bg-[#8B3DFF] w-full h-full max-h-12 hover:bg-[#7731d8] transition-colors duration-300"
+      >
         <PlusIcon />
         <span className="text-lg font-semibold">Create a note</span>
       </button>

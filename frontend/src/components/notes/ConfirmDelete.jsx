@@ -28,18 +28,18 @@ export default function ConfirmDelete({note, cancelDeletion}) {
   return (
     <div className="flex flex-col gap-2 items-center p-1 max-w-72 mx-auto rounded-lg">
       <TrashIconXl />
-      <h2 className="text-2xl text-center font-semibold">Are you sure you want to delete this note?</h2>
-      <p className="text-gray-200 mb-4">{title?.length > 20 ? title.slice(0, 20) + "..." : title}</p>
+      <h2 className="text-2xl text-center font-semibold dark:text-white">Are you sure you want to delete this note?</h2>
+      <p className="text-gray-800 dark:text-gray-200 mb-4">{title?.length > 20 ? title.slice(0, 20) + "..." : title}</p>
       <div className="flex gap-2 w-full">
         <button
           onClick={cancelDeletion}
-          className="p-2 w-full font-semibold border border-gray-500 rounded-lg hover:bg-gray-800 transition-all duration-300"
+          className="p-2 w-full font-semibold text-gray-700 border border-gray-200 dark:border-gray-500 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 dark:text-white transition-all duration-300"
         >
           Cancel
         </button>
         <button
           onClick={handleDelete}
-          className="p-2 w-full font-semibold border border-gray-500 bg-red-600 rounded-lg hover:bg-red-700 transition-all duration-300"
+          className="p-2 w-full font-semibold border  border-gray-200 dark:border-gray-500 bg-red-600 rounded-lg hover:bg-red-700 text-white transition-all duration-300"
         >
           {deletingNote ? <Spinner size="6" /> : "Delete"}
         </button>
