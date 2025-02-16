@@ -21,6 +21,7 @@ const sessionSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload
+      state.loginErrors = null;
     })
     builder.addCase(loginUser.rejected, (state, action) => {
       state.loginErrors = action.payload.errors

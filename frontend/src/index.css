@@ -11,13 +11,23 @@
 html, body, #root {
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 }
 
-#theme-circle {
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(0);
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
 }
 
-#theme-circle.dark {
-  transform: translateX(41px);
+.bg-animated-gradient {
+  background: linear-gradient(270deg, #10475f, #203a43, #2c5364, #121016);
+  background-size: 600% 600%;
+  animation: gradientAnimation 15s ease infinite;
 }

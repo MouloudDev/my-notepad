@@ -20,14 +20,21 @@ export default function Settings() {
 
   const toggleTheme = () => {
     const root = document.getElementById("root");
-    const circle = document.getElementById("theme-circle");
+    // there will be two circles because two instances of <Settings />
+    // are rendered, one in small to medium screens and one in large screens.
+    const circles = document.querySelectorAll(".theme-circle");
 
     root.classList.toggle("dark");
-    circle.classList.toggle("dark");
+
+    const isDark = root.classList.contains('dark');
+    circles.forEach(circle =>
+      circle.style.left =
+        isDark ? "calc(100% - 34px)" : "2px"
+    )
   }
 
   return (
-    <div className="p-2 ml-auto w-full max-w-60 max-h-fit border-x border-x-gray-500">
+    <div className="p-2 ml-auto w-full max-w-60 max-h-fit lg:border-x border-x-gray-500">
       <button
         className="group flex gap-1 items-center justify-between p-2 w-full shadow-lg rounded-lg border border-gray-300 hover:bg-gray-300 dark:border-gray-500 dark:hover:bg-gray-600 transition-colors duration-400"
         onClick={() => setShowOptions(prev => !prev)}
@@ -73,16 +80,16 @@ export default function Settings() {
             <span className="font-normal dark:text-white">Geist Mono</span>
             {fontFamily === '"Geist Mono", monospace' && <Check />}
           </button>
+
           <h2 className="text-lg font-bold dark:text-white">Theme</h2>
           <button
             onClick={toggleTheme}
             className="flex justify-center items-center my-1 p-1 gap-2 w-full rounded-lg bg-[#FFD54F] dark:bg-[#3498DB] transition-all duration-300"
           >
             <span className="w-fit text-2xl text-[#2C3E50] font-bold dark:font-normal dark:text-white">Light</span>
-            <div className="w-20 bg-[#B0BEC5] rounded-3xl p-1 dark:bg-[#34495E]">
+            <div className="relative w-20 h-9 bg-[#B0BEC5] rounded-3xl p-1 dark:bg-[#34495E]">
               <div
-                id="theme-circle"
-                className="w-8 h-8 rounded-full bg-white dark:bg-[#ECF0F1]"
+                className="theme-circle absolute left-[2px] top-[2px] w-8 h-8 rounded-full bg-white dark:bg-[#ECF0F1] transition-all duration-500"
               >
               </div>
             </div>

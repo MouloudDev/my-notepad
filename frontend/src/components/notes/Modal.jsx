@@ -9,7 +9,9 @@ export default function Modal({ isOpen, onClose, styles, children }) {
         <div className={styles.closeBtnWrapper + ' h-10'}>
           <button
             onClick={onClose}
-            className={styles.closeButton + " absolute top-1 right-1 flex justify-center items-center h-8 w-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-300"}
+            className={"absolute top-1 right-1 flex justify-center items-center h-8 w-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300 "
+              + styles.closeButton
+            }
           >
             <XMark />
           </button>

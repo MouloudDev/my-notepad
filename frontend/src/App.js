@@ -4,6 +4,7 @@ import Login from "./components/loginForm";
 import Home from "./components/home";
 import ProtectedRoute from "./components/protectedRoute";
 import Signup from "./components/signupForm";
+import LandingPage from "./components/landingPage";
 
 function App() {
   useEffect(() => {
@@ -16,7 +17,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
